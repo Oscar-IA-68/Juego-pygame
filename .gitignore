@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Herramientas de Python
+.pytest_cache/
+.mypy_cache/
+
+# Build/packaging
+build/
+dist/
+*.egg-info/
+
+# IDE/editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Datos locales del juego (evita subir nombres/puntajes personales)
+puntajes.txt
