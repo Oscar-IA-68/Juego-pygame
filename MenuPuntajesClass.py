@@ -14,15 +14,19 @@ class MenuPuntajes:
     ventana = pygame.display.set_mode((ANCHO, ALTO))
     pygame.display.set_caption("Mejores puntajes")
     
-    # Obtener la ruta del directorio del script o del bundle
-    base_path = getattr(sys, '_MEIPASS', os.path.dirname(__file__))
+    @staticmethod
+    def _get_scores_base_path():
+        # En ejecutable usa la carpeta del .exe; en desarrollo usa la carpeta del script.
+        if getattr(sys, 'frozen', False):
+            return os.path.dirname(sys.executable)
+        return os.path.dirname(os.path.abspath(__file__))
 
     def __init__(self, back_mtd):
         self.back_mtd = back_mtd
         
     def cargar_puntajes(self, archivo):
         puntajes = []
-        ruta_archivo = os.path.join(self.base_path, archivo)
+        ruta_archivo = os.path.join(self._get_scores_base_path(), archivo)
         try:
             with open(ruta_archivo, 'r') as file:
                 for line in file:
@@ -46,7 +50,7 @@ class MenuPuntajes:
         return sorted(puntajes, key=lambda x: x[1], reverse=True)[:5]
     
     def cargar_imagen(self, nombre_archivo):
-        ruta = os.path.join(self.base_path, "img", nombre_archivo)
+        ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "img", nombre_archivo)
         return pygame.image.load(ruta).convert_alpha()
     
     def mostrar_texto(self, texto, font, color, superficie, x, y):

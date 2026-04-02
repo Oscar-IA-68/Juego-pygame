@@ -88,9 +88,15 @@ class PantallaNombre:
         ruta = os.path.join(ruta_base, "img", nombre_archivo)
         return pygame.transform.scale(pygame.image.load(ruta).convert(), (self.ANCHO, self.ALTO))
 
+    @staticmethod
+    def _get_scores_base_path():
+        # En ejecutable usa la carpeta del .exe; en desarrollo usa la carpeta del script.
+        if getattr(sys, 'frozen', False):
+            return os.path.dirname(sys.executable)
+        return os.path.dirname(os.path.abspath(__file__))
+
     def escribir_en_archivo(self, nombre_archivo, contenido):
-        directorio_trabajo = os.getcwd()
-        ruta = os.path.join(directorio_trabajo, nombre_archivo)
+        ruta = os.path.join(self._get_scores_base_path(), nombre_archivo)
 
         try:
             if not os.path.exists(ruta):
